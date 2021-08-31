@@ -110,24 +110,24 @@ Vagrant.configure("2") do |config|
 
     # Run some setup commands to get the database ready to use.
     # First create a database.
-    echo "CREATE DATABASE pizza;" | mysql
+    echo "CREATE DATABASE bytes_pizza;" | mysql
 
     # Then create a database user "webuser" with the given password.
-    echo "CREATE USER 'webuser'@'%' IDENTIFIED BY 'insecure_db_pw';" | mysql
+    echo "CREATE USER 'webuser'@'%' IDENTIFIED BY 'test1234';" | mysql
 
     # Grant all permissions to the database user "webuser" regarding
     # the "pizza" database that we just created, above.
-    echo "GRANT ALL PRIVILEGES ON pizza.* TO 'webuser'@'%'" | mysql
+    echo "GRANT ALL PRIVILEGES ON bytes_pizza.* TO 'webuser'@'%'" | mysql
     
     # Set the MYSQL_PWD shell variable that the mysql command will
     # try to use as the database password ...
-    export MYSQL_PWD='insecure_db_pw'
+    export MYSQL_PWD='test1234'
 
     # ... and run all of the SQL within the setup-database.sql file,
     # which is part of the repository containing this Vagrantfile, so you
     # can look at the file on your host. The mysql command specifies both
     # the user to connect as (webuser) and the database to use (pizza).
-    cat /vagrant/setup-database.sql | mysql -u webuser pizza
+    cat /vagrant/setup-database.sql | mysql -u webuser bytes_pizza
 
     # By default, MySQL only listens for local network requests,
     # i.e., that originate from within the dbserver VM. We need to
