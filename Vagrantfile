@@ -9,31 +9,31 @@ Vagrant.configure("2") do |config|
   # Use Ubuntu 20.04  for all VMs.
   config.vm.box = "ubuntu/xenial64"
 
-  # 1st VM: webserver-user.
-  config.vm.define "webserver-user" do |webserver-user|
-    # These are options specific to the webserver-user VM
-    webserver-user.vm.hostname = "webserver-user"
+  # 1st VM: webserver_user.
+  config.vm.define "webserver_user" do |webserver_user|
+    # These are options specific to the webserver_user VM
+    webserver_user.vm.hostname = "webserver-user"
     
     # This type of port forwarding means that our host computer can
     # connect to IP address 127.0.0.1 port 8080, and that network
-    # request will reach our webserver-user VM's port 80.
-    webserver-user.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+    # request will reach our webserver_user VM's port 80.
+    webserver_user.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
     
     # We set up a private network that our VMs will use to communicate
     # with each other. Note that I have manually specified an IP
-    # address for our webserver-user VM to have on this internal network,
+    # address for our webserver_user VM to have on this internal network,
     # too. There are restrictions on what IP addresses will work, but
     # a form such as 192.168.2.x for x being 11, 12 and 13 (three VMs)
     # is likely to work.
-    webserver-user.vm.network "private_network", ip: "192.168.2.11"
+    webserver_user.vm.network "private_network", ip: "192.168.2.11"
 
     # This following line is only necessary in the CS Labs.
-    webserver-user.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+    webserver_user.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
    # Use virtualbox as hypervisor
-   webserver-user.vm.provider "virtualbox" do |vb|
+   webserver_user.vm.provider "virtualbox" do |vb|
      # This line to setup the name of our virtual machine as it will appear in virtual box.
-     vb.name = "webserver-user"
+     vb.name = "webserver_user"
      # Don't display the VirtualBox GUI when booting the machine
      vb.gui = false
      # 1GB RAM
@@ -42,10 +42,10 @@ Vagrant.configure("2") do |config|
 
 
     # Now we have a section specifying the shell commands to provision
-    # the webserver-user VM. Note that the file user.conf is copied
+    # the webserver_user VM. Note that the file user.conf is copied
     # from this host to the VM through the shared folder mounted in
     # the VM at /vagrant
-    webserver-user.vm.provision "shell", inline: <<-SHELL
+    webserver_user.vm.provision "shell", inline: <<-SHELL
     echo "user webserver has started"
     # Install the Apache Web Server (version 2). Here I used the   
     # apt package management system because I'm working on a Linux system
@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
       apt-get update
       apt-get install -y apache2 php libapache2-mod-php php-mysql
             
-      # Change VM's webserver-user's configuration to use shared folder.
+      # Change VM's webserver_user's configuration to use shared folder.
       # (Look inside test-website.conf for specifics.)
       cp /vagrant/user.conf /etc/apache2/sites-available/
       # activate our website configuration ...
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
   # 2nd VM: database server.
   config.vm.define "dbserver" do |dbserver|
   dbserver.vm.hostname = "dbserver"
-  # Note that the IP address is different from that of the webserver-user
+  # Note that the IP address is different from that of the webserver_user
   # above: it is important that no two VMs attempt to use the same
   # IP address on the private_network.
   dbserver.vm.network "private_network", ip: "192.168.2.12"
@@ -131,7 +131,7 @@ Vagrant.configure("2") do |config|
 
     # By default, MySQL only listens for local network requests,
     # i.e., that originate from within the dbserver VM. We need to
-    # change this so that the webserver-user VM can connect to the
+    # change this so that the webserver_user VM can connect to the
     # database on the dbserver VM. Use of `sed` is pretty obscure,
     # but the net effect of the command is to find the line
     # containing "bind-address" within the given `mysqld.cnf`
@@ -146,31 +146,31 @@ Vagrant.configure("2") do |config|
   SHELL
 end
 
-  # 3rd VM: webserver-admin.
-  config.vm.define "webserver-admin" do |webserver-admin|
-    # These are options specific to the webserver-user VM
-    webserver-admin.vm.hostname = "webserver-admin"
+  # 3rd VM: webserver_admin.
+  config.vm.define "webserver_admin" do |webserver_admin|
+    # These are options specific to the webserver_admin VM
+    webserver_admin.vm.hostname = "webserver_admin"
     
     # This type of port forwarding means that our host computer can
     # connect to IP address 127.0.0.1 port 8081, and that network
-    # request will reach our webserver-admin VM's port 80.
-    webserver-admin.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1"
+    # request will reach our webserver_admin VM's port 80.
+    webserver_admin.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1"
     
     # We set up a private network that our VMs will use to communicate
     # with each other. Note that I have manually specified an IP
-    # address for our webserver-admin VM to have on this internal network,
+    # address for our webserver_admin VM to have on this internal network,
     # too. There are restrictions on what IP addresses will work, but
     # a form such as 192.168.2.x for x being 11, 12 and 13 (three VMs)
     # is likely to work.
-    webserver-admin.vm.network "private_network", ip: "192.168.2.13"
+    webserver_admin.vm.network "private_network", ip: "192.168.2.13"
 
     # This following line is only necessary in the CS Labs.
-    webserver-admin.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+    webserver_admin.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
    # Use virtualbox as hypervisor
-   webserver-admin.vm.provider "virtualbox" do |vb|
+   webserver_admin.vm.provider "virtualbox" do |vb|
      # This line to setup the name of our virtual machine as it will appear in virtual box.
-     vb.name = "webserver-admin"
+     vb.name = "webserver_admin"
      # Don't display the VirtualBox GUI when booting the machine
      vb.gui = false
      # 1GB RAM
@@ -179,10 +179,10 @@ end
 
 
     # Now we have a section specifying the shell commands to provision
-    # the webserver-admin VM. Note that the file admin.conf is copied
+    # the webserver_admin VM. Note that the file admin.conf is copied
     # from this host to the VM through the shared folder mounted in
     # the VM at /vagrant
-    webserver-admin.vm.provision "shell", inline: <<-SHELL
+    webserver_admin.vm.provision "shell", inline: <<-SHELL
     echo "admin webserver has started"
     # Install the Apache Web Server (version 2). Here I used the   
     # apt package management system because I'm working on a Linux system
@@ -190,7 +190,7 @@ end
       apt-get update
       apt-get install -y apache2 php libapache2-mod-php php-mysql
             
-      # Change VM's webserver-admin's configuration to use shared folder.
+      # Change VM's webserver_admin's configuration to use shared folder.
       # (Look inside test-website.conf for specifics.)
       cp /vagrant/admin.conf /etc/apache2/sites-available/
       # activate our website configuration ...
