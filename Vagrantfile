@@ -65,8 +65,8 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
-# 2nd VM: database server.
-config.vm.define "dbserver" do |dbserver|
+  # 2nd VM: database server.
+  config.vm.define "dbserver" do |dbserver|
   dbserver.vm.hostname = "dbserver"
   # Note that the IP address is different from that of the webserver_user
   # above: it is important that no two VMs attempt to use the same
@@ -146,6 +146,61 @@ config.vm.define "dbserver" do |dbserver|
   SHELL
 end
 
+  # 3rd VM: webserver_admin.
+  config.vm.define "webserver_admin" do |webserver_admin|
+    # These are options specific to the webserver_user VM
+    webserver_admin.vm.hostname = "webserver_admin"
+    
+    # This type of port forwarding means that our host computer can
+    # connect to IP address 127.0.0.1 port 8081, and that network
+    # request will reach our webserver_admin VM's port 80.
+    webserver_admin.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1"
+    
+    # We set up a private network that our VMs will use to communicate
+    # with each other. Note that I have manually specified an IP
+    # address for our webserver_user VM to have on this internal network,
+    # too. There are restrictions on what IP addresses will work, but
+    # a form such as 192.168.2.x for x being 11, 12 and 13 (three VMs)
+    # is likely to work.
+    webserver_admin.vm.network "private_network", ip: "192.168.2.13"
+
+    # This following line is only necessary in the CS Labs.
+    webserver_admin.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+
+   # Use virtualbox as hypervisor
+   webserver_admin.vm.provider "virtualbox" do |vb|
+     # This line to setup the name of our virtual machine as it will appear in virtual box.
+     vb.name = "webserver_admin"
+     # Don't display the VirtualBox GUI when booting the machine
+     vb.gui = false
+     # 1GB RAM
+     vb.memory = "1024"
+   end
+
+
+    # Now we have a section specifying the shell commands to provision
+    # the webserver_admin VM. Note that the file admin.conf is copied
+    # from this host to the VM through the shared folder mounted in
+    # the VM at /vagrant
+    webserver_admin.vm.provision "shell", inline: <<-SHELL
+    echo "admin webserver has started"
+    # Install the Apache Web Server (version 2). Here I used the   
+    # apt package management system because I'm working on a Linux system
+    # such as Debian or Ubuntu.
+      apt-get update
+      apt-get install -y apache2 php libapache2-mod-php php-mysql
+            
+      # Change VM's webserver_admin's configuration to use shared folder.
+      # (Look inside test-website.conf for specifics.)
+      cp /vagrant/admin.conf /etc/apache2/sites-available/
+      # activate our website configuration ...
+      a2ensite admin
+      # ... and disable the default website provided with Apache
+      a2dissite 000-default
+      # Reload the webserver configuration, to pick up our changes
+      service apache2 reload
+    SHELL
+  end
 end
 
 #  LocalWords:  webserver xenial64
