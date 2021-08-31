@@ -7,7 +7,7 @@
 
 Vagrant.configure("2") do |config|
   # Use Ubuntu 20.04  for all VMs.
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "ubuntu/xenial64"
 
   # 1st VM: webserver_user.
   config.vm.define "webserver_user" do |webserver_user|
