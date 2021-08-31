@@ -113,7 +113,7 @@ Vagrant.configure("2") do |config|
     echo "CREATE DATABASE bytes_pizza;" | mysql
 
     # Then create a database user "webuser" with the given password.
-    echo "CREATE USER 'webuser'@'%' IDENTIFIED BY 'test1234';" | mysql
+    echo "CREATE USER 'webuser'@'%' IDENTIFIED BY 'insecure_db_pw';" | mysql
 
     # Grant all permissions to the database user "webuser" regarding
     # the "pizza" database that we just created, above.
@@ -121,7 +121,7 @@ Vagrant.configure("2") do |config|
     
     # Set the MYSQL_PWD shell variable that the mysql command will
     # try to use as the database password ...
-    export MYSQL_PWD='test1234'
+    export MYSQL_PWD='insecure_db_pw'
 
     # ... and run all of the SQL within the setup-database.sql file,
     # which is part of the repository containing this Vagrantfile, so you
