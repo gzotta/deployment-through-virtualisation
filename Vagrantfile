@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
       # ... and disable the default website provided with Apache
       a2dissite 000-default
       # Reload the webserver configuration, to pick up our changes
-      service apache2 reload
+      systemctl apache2 reload
     SHELL
   end
 
@@ -149,7 +149,7 @@ end
   # 3rd VM: webserver_admin.
   config.vm.define "webserver_admin" do |webserver_admin|
     # These are options specific to the webserver_admin VM
-    webserver_admin.vm.hostname = "webserver_admin"
+    webserver_admin.vm.hostname = "webserver-admin"
     
     # This type of port forwarding means that our host computer can
     # connect to IP address 127.0.0.1 port 8081, and that network
@@ -198,7 +198,7 @@ end
       # ... and disable the default website provided with Apache
       a2dissite 000-default
       # Reload the webserver configuration, to pick up our changes
-      service apache2 reload
+      systemctl apache2 reload
     SHELL
   end
 end
