@@ -1,4 +1,4 @@
-# deployment-through-virtualisation
+# Deployment Through Virtualisation
 This project demonstrates how effecting portable building and deployment of software applications is accomplished through virtualisation.
 The application to be deployed is a simple PHP web application that allows users to add pizzas to a database. It also has an admin interface that 
 allows admins to add and delete pizzas from the database. 
