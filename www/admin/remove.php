@@ -9,7 +9,7 @@ if (isset($_POST['delete'])) {
     $sql = "DELETE FROM pizzas WHERE id = $id_to_delete";
 
     if (mysqli_query($conn, $sql)) {
-        header('Location: admin.php');
+        header('Location: index.php');
     } else {
         echo 'query error: ' . mysqli_error($conn);
     }

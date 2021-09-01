@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE pizzas (
-  id int(11) NOT NULL,
+  id int(11) PRIMARY KEY AUTO_INCREMENT,
   title varchar(255) NOT NULL,
   ingredients varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
