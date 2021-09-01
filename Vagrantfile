@@ -199,7 +199,7 @@ Vagrant.configure("2") do |config|
       # ... and disable the default website provided with Apache
       a2dissite 000-default
       # Reload the webserver configuration, to pick up our changes
-      system apache2 reload
+      service apache2 reload
     SHELL
   end
 end
