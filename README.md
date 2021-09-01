@@ -10,7 +10,7 @@ Virtual machines. The first is responsible for data storage, the second runs a w
 administrative functionality.
 
 
-# **Build Instructions**
+## **Build Instructions**
 
 - **Prerequistes:** VirtualBox, Vagrant.
 - Clone repository, then open a shell at the location of the repository and run the `vagrant up` command to start VMs.
@@ -27,4 +27,6 @@ or
 http://localhost:8081 
 
 
-I did not know how to program in PHP so I give credit to https://github.com/iamshaunjp and his PHP tutorial https://github.com/iamshaunjp/php-mysql-tutorial thanks to this tutorial I learnt very useful skills for programming in PHP, also my pizza PHP app is based in this tutorial.
+
+## **Acknowledgement**
+I did not know how to program in PHP so I give credit to https://github.com/iamshaunjp and his PHP tutorial https://github.com/iamshaunjp/php-mysql-tutorial thanks to this tutorial I learnt very useful skills for programming in PHP, also my pizza PHP app is based on this tutorial.
