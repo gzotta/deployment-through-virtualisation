@@ -57,11 +57,11 @@ Vagrant.configure("2") do |config|
       # (Look inside test-website.conf for specifics.)
       cp /vagrant/user.conf /etc/apache2/sites-available/
       # activate our website configuration ...
-      a2ensite test-website
+      a2ensite user
       # ... and disable the default website provided with Apache
       a2dissite 000-default
       # Reload the webserver configuration, to pick up our changes
-      system apache2 reload
+      service apache2 reload
     SHELL
   end
 
@@ -144,7 +144,7 @@ Vagrant.configure("2") do |config|
     # our configuration changes.
     service mysql restart
   SHELL
-end
+ end
 
   # 3rd VM: webserver_admin.
   config.vm.define "webserver_admin" do |webserver_admin|
