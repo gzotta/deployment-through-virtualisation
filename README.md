@@ -9,6 +9,7 @@ The application operates through the coordination of three different
 Virtual machines. The first is responsible for data storage, the second runs a web interface for users, and the third provides
 administrative functionality.
 
+
 # **Build Instructions**
 
 - **Prerequistes:** VirtualBox, Vagrant.
@@ -24,3 +25,6 @@ To open the admin portal:
 http://127.0.0.1:8081
 or
 http://localhost:8081 
+
+
+I did not know how to program in PHP so I give credit to https://github.com/iamshaunjp and his PHP tutorial https://github.com/iamshaunjp/php-mysql-tutorial thanks to this tutorial I learnt very useful skills for programming in PHP, also my pizza PHP app is based in this tutorial.
