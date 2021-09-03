@@ -28,5 +28,18 @@ http://localhost:8081
 
 
 
+
+
+## **Two different types of change that a developer might make to the code of my repository, and how they can subsequently rebuild and rerun the application after they have made such changes.**
+
+-	Change of working environment: in the Vagrant file you can modify config.vm.box = "ubuntu/xenial64"  to a different box that matches your use case. 
+-	Change of VM’s provisioning: if a developer needs to change the configuration of a VM to match a particular specification, it can be done through the shell script of the specific VM in the Vagrant file.  
+After cloning my repository, and modifying the Vagrant file, open a shell in the current directory and run the vagrant up command to rebuild and rerun the application. If you had vagrant up before, make sure to run vagrant destroy command before running the vagrant up command again. 
+
+
+
+
 ## **Acknowledgement**
 I did not know how to program in PHP so I give credit to https://github.com/iamshaunjp and his PHP tutorial https://github.com/iamshaunjp/php-mysql-tutorial thanks to this tutorial I learnt very useful skills for programming in PHP, also my pizza PHP app is based on this tutorial.
+
+
